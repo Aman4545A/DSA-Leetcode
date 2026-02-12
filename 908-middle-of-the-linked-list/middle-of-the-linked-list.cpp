@@ -29,7 +29,7 @@ public:
 
         ListNode* mid = middleNode(head);
 
-        ListNode* secondHalf = mid->next;
+        ListNode* secondHalf = mid;
         mid->next = NULL;  
 
         return secondHalf;
