@@ -1,50 +1,49 @@
 class Solution {
 public:
     
-    ListNode* copyList(ListNode* head) {
-        if (!head) return NULL;
-        
-        ListNode* newHead = new ListNode(head->val);
-        ListNode* temp1 = head->next;
-        ListNode* temp2 = newHead;
-        
-        while (temp1) {
-            temp2->next = new ListNode(temp1->val);
-            temp1 = temp1->next;
-            temp2 = temp2->next;
+    ListNode* reverse(ListNode* head) {
+        ListNode* prev = NULL;
+        while (head) {
+            ListNode* next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
         }
-        
-        return newHead;
+        return prev;
     }
     
     bool isPalindrome(ListNode* head) {
         if (!head || !head->next) return true;
 
         
-        ListNode* originalCopy = copyList(head);
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
 
         
-        ListNode* curr = head;
-        ListNode* prev = NULL;
-        ListNode* next = NULL;
+        ListNode* secondHalf = reverse(slow->next);
 
-        while (curr != NULL) {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+       
+        ListNode* firstHalf = head;
+        ListNode* temp = secondHalf;
+        bool palindrome = true;
+
+        while (temp) {
+            if (firstHalf->val != temp->val) {
+                palindrome = false;
+                break;
+            }
+            firstHalf = firstHalf->next;
+            temp = temp->next;
         }
 
-        ListNode* temp1 = prev;           
-        ListNode* temp2 = originalCopy;   
+        
+        slow->next = reverse(secondHalf);
 
-        while (temp1 && temp2) {
-            if (temp1->val != temp2->val)
-                return false;
-            temp1 = temp1->next;
-            temp2 = temp2->next;
-        }
-
-        return true;
+        return palindrome;
     }
 };
