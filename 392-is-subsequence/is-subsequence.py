@@ -11,8 +11,11 @@ class Solution:
                         j = j+1 
 
 
-                    return i == len(s)
-                    
+                    if i == len(s):
+                        return True
+                        
+                    else:
+                        return False
        
     
         
