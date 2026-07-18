@@ -17,7 +17,7 @@ public:
         if(st > end){
             return NULL;
         }
-        int mid = (st+end)/2;
+        int mid = st + (end - st) / 2;
         TreeNode* root = new TreeNode(nums[mid]);
         root->left = helper(nums , st , mid-1);
         root->right = helper(nums, mid+1, end);
